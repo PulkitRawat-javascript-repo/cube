@@ -1,0 +1,31 @@
+
+<!DOCTYPE html> 
+<html lang = "en">
+    <head> 
+        <meta charset="UTF-8">
+        <title></title>
+        <script type="text/javascript" src="./two.min.js"></script>
+        <style></style>
+        <body>
+            <div id="canvas_1">
+            </div>
+            <div id="canvas_1">
+            </div>
+            <script type="text/javascript">
+               var params = {
+                fitted: true
+            };
+            
+            var ob1 = document.getElementById('canvas_1');
+            var two1 = new Two(params);
+            two1.appendTo(ob1);    
+            
+            
+            var ob2 = document.getElementById('canvas_2');
+            var two2 = new Two(params);
+            two2.appendTo(ob2);
+    
+            </script>
+
+    </head>
+</html>
