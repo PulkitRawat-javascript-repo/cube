@@ -1,4 +1,3 @@
-
 <!DOCTYPE html> 
 <html lang = "en">
     <head> 
@@ -6,6 +5,13 @@
         <title></title>
         <script type="text/javascript" src="./two.min.js"></script>
         <style>
+             .cards-list {
+            z-index: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
              .card {
             margin: 30px auto;
             width: 500px;
@@ -24,9 +30,9 @@
         }
         </style>
         <body>
-            <div id="canvas_1" class = "card">
-            </div>
-            <div id="canvas_2" class = "card">
+            <div class = "cards-list">
+            <div id="canvas_1" class = "card"></div>
+            <div id="canvas_2" class = "card"></div>
             </div>
             <script type="text/javascript">
                var params = {
@@ -40,6 +46,7 @@
             circle.fill = '#06090c';
             circle.stroke = '#42c1f9';
             circle.linewidth = 6;
+            var mouse1 = new Two.Vector();
             two1.update();
 
             function get_points(w, h, num_points) {
@@ -65,10 +72,10 @@
                 x = i * max_x / (num_points - 1);
                 yy = h / 2 + scale_y * Math.sin(x);
                 xx = scale_x * x;
-                console.log(x, xx, yy);
+                // console.log(x, xx, yy);
                 points.push(new Two.Anchor(xx, yy, 0, 0, 0, 0, cmnd));
             }
-            console.log(points);
+            // console.log(points);
             return points
             }
             
@@ -79,7 +86,7 @@
             var curve_fill = new Two.Path(points);
             curve_fill.fill = "#13ffb9";
             curve_fill.opacity = 0.3;
-
+            var mouse2 = new Two.Vector();
             var curve_path = new Two.Path(points);
             curve_path.stroke = "#13ffb9";
             curve_path.no_fill = true;
@@ -97,7 +104,44 @@
             two2.add(curve_path);
 
             two2.update();
-    
+
+            // ob1.addEventListener('pointermove', pointermove, false);
+            ob2.addEventListener('pointermove', pointermove, false);
+            function pointermove(e) {
+            mouse1.x = e.clientX - getOffset(ob1).left;
+            mouse1.y = e.clientY - getOffset(ob1).top;
+            mouse2.x = e.clientX - getOffset(ob2).left;
+            mouse2.y = e.clientY - getOffset(ob2).top;
+
+            alpha = mouse2.x*Math.PI*2/(two2.width)
+            console.log(alpha)
+            r = 100;
+            var dot = two1.makeCircle(-100, 0, 10);
+            dot.fill = '#06090c';
+            dot.stroke = '#13ffb9';
+            dot.linewidth = 3;
+
+            var yaxis = two2.makeLine(0, 0,0, two2.height);
+            yaxis.linewidth = 4;
+            yaxis.noFill();
+            yaxis.stroke = "green";
+            two2.update();
+            two1.update();
+            dot.translation.set((two1.width/2)-r*Math.cos(alpha), (two1.height/2)-r*Math.sin(alpha));
+            yaxis.translation.set(mouse2.x,0)
+            
+            two1.update();
+            two2.update();
+            yaxis.remove();
+            dot.remove();
+            }
+            function getOffset(el) {
+            const rect = el.getBoundingClientRect();
+            return {
+                left: rect.left + window.scrollX,
+                top: rect.top + window.scrollY
+            }
+            }
             </script>
 
     </head>
