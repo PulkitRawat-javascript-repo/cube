@@ -105,17 +105,31 @@
 
             two2.update();
 
-            // ob1.addEventListener('pointermove', pointermove, false);
-            ob2.addEventListener('pointermove', pointermove, false);
-            function pointermove(e) {
+            // ob1.addEventListener('pointermove', pointermove1, false);
+            ob2.addEventListener('pointermove', pointermove2, false);
+            // function pointermove1(e) {
+            // mouse1.x = e.clientX - getOffset(ob1).left;
+            // mouse1.y = e.clientY - getOffset(ob1).top;
+
+            // var circle1 = two1.makeCircle((two1.width - 4) / 2, (two1.height - 4) / 2, 100);
+            // circle1.fill = '#06090c';
+            // circle1.stroke = '#42c1f9';
+            // circle1.linewidth = 10;
+
+            // two1.update()
+            // circle1.remove()
+
+            // }
+            function pointermove2(e) {
             mouse1.x = e.clientX - getOffset(ob1).left;
             mouse1.y = e.clientY - getOffset(ob1).top;
             mouse2.x = e.clientX - getOffset(ob2).left;
             mouse2.y = e.clientY - getOffset(ob2).top;
 
             alpha = mouse2.x*Math.PI*2/(two2.width)
-            console.log(alpha)
+            // console.log(alpha)
             r = 100;
+
             var dot = two1.makeCircle(-100, 0, 10);
             dot.fill = '#06090c';
             dot.stroke = '#13ffb9';
@@ -135,6 +149,8 @@
             yaxis.remove();
             dot.remove();
             }
+            
+            
             function getOffset(el) {
             const rect = el.getBoundingClientRect();
             return {
