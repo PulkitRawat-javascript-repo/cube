@@ -10,21 +10,22 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
             renderer.setSize(window.innerWidth, window.innerHeight);
             document.body.appendChild(renderer.domElement); 
 			
-            const axeshelper = new THREE.AxesHelper(5);
-			scene.add(axeshelper);
+            // const axeshelper = new THREE.AxesHelper(5);
+			// scene.add(axeshelper);
 
 			const orbit = new OrbitControls(camera, renderer.domElement);
-
-			camera.position.set(0,2,5);	
+            // Orbit controls allow the camera to orbit around a target.
+			camera.position.set(0,0,5);	
+            // the starting position of camera
 			orbit.update();
 			
-			const boxGeometry = new THREE.BoxGeometry();
+			const boxGeometry = new THREE.BoxGeometry(3,3,3);
 		    const boxMaterial = new THREE.MeshBasicMaterial({color: 0x00FF00} );
 			const box = new THREE.Mesh(boxGeometry, boxMaterial);
 			scene.add(box);
 
-			box.rotation.x=3;
-			box.rotation.y=3;
+			// box.rotation.x=3;
+			// box.rotation.y=3;
 
 			function animate(){
 				// box.rotation.y +=0.01;
