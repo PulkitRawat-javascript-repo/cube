@@ -10,7 +10,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
             document.body.appendChild(renderer.domElement); 
 			
             var mouse = new THREE.Vector2();
-            // var raycaster = new THREE.Raycaster();
+            var raycaster = new THREE.Raycaster();
 
             window.addEventListener( 'pointermove', onPointerMove,false);
             window.addEventListener('resize',function()
@@ -23,7 +23,14 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
             function onPointerMove( event ) {
                 mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
 	            mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-            }   
+            }    
+            
+            // function onPointerMove(event) {
+            //     const rect = renderer.domElement.getBoundingClientRect();
+            
+            //     mouse.x = ( ( event.clientX - rect.left ) / ( rect.right - rect.left ) ) * 2 - 1;
+            //     mouse.y = - ( ( event.clientY - rect.top ) / ( rect.bottom - rect.top) ) * 2 + 1;
+            // }
             
 			const orbit = new OrbitControls(camera, renderer.domElement);
             // Orbit controls allow the camera to orbit around a target.
@@ -34,18 +41,18 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 			
 			const boxGeometry = new THREE.BoxGeometry(3,3,3);
 
-            var cubeMaterial = 
-            [
-                new THREE.MeshBasicMaterial({color:0x00FF00,side:THREE.DoubleSide}), //right
-                new THREE.MeshBasicMaterial({color:0x00FF00,side:THREE.DoubleSide}), //left
-                new THREE.MeshBasicMaterial({color:0x00FF00,side:THREE.DoubleSide}), //top
-                new THREE.MeshBasicMaterial({color:0x00FF00,side:THREE.DoubleSide}), //bottom
-                new THREE.MeshBasicMaterial({color:0x00FF00,side:THREE.DoubleSide}), //front
-                new THREE.MeshBasicMaterial({color:0x00FF00,side:THREE.DoubleSide})  //back
-            ];
+            // var cubeMaterial = 
+            // [
+            //     new THREE.MeshBasicMaterial({color:0x00FF00,side:THREE.DoubleSide}), //right
+            //     new THREE.MeshBasicMaterial({color:0x00FF00,side:THREE.DoubleSide}), //left
+            //     new THREE.MeshBasicMaterial({color:0x00FF00,side:THREE.DoubleSide}), //top
+            //     new THREE.MeshBasicMaterial({color:0x00FF00,side:THREE.DoubleSide}), //bottom
+            //     new THREE.MeshBasicMaterial({color:0x00FF00,side:THREE.DoubleSide}), //front
+            //     new THREE.MeshBasicMaterial({color:0x00FF00,side:THREE.DoubleSide})  //back
+            // ];
 
-		    // const boxMaterial = new THREE.MeshBasicMaterial({color: 0x00FF00});
-		    const boxMaterial = new THREE.MeshFaceMaterial(cubeMaterial)
+		    const boxMaterial = new THREE.MeshBasicMaterial({color: 0x00FF00});
+		    // const boxMaterial = new THREE.MeshFaceMaterial(cubeMaterial)
 			const box = new THREE.Mesh(boxGeometry, boxMaterial);
 			scene.add(box);
            
