@@ -32,6 +32,17 @@ var objects = [];
 var geometry = new THREE.BoxGeometry(5, 5, 5);
 
 var materials = new THREE.MeshPhongMaterial({color: 0x00ff00, vertexColors:true })
+
+//   var materials = 
+//             [
+//                 new THREE.MeshPhongMaterial({color:0x00FF00,side:THREE.DoubleSide,vertexColors:true}), //right
+//                 new THREE.MeshPhongMaterial({color:0x00FF00,side:THREE.DoubleSide,vertexColors:true}), //left
+//                 new THREE.MeshPhongMaterial({color:0x00FF00,side:THREE.DoubleSide,vertexColors:true}), //top
+//                 new THREE.MeshPhongMaterial({color:0x00FF00,side:THREE.DoubleSide,vertexColors:true}), //bottom
+//                 new THREE.MeshPhongMaterial({color:0x00FF00,side:THREE.DoubleSide,vertexColors:true}), //front
+//                 new THREE.MeshPhongMaterial({color:0x00FF00,side:THREE.DoubleSide,vertexColors:true})  //back
+//             ];
+
 var cube = new THREE.Mesh(geometry, materials);
 
 cube.receiveShadow = true;
@@ -76,8 +87,26 @@ function MouseMove(e) {
 
     let raycaster = new THREE.Raycaster();
     raycaster.setFromCamera(mouse, camera);
-
+    
     let intersects = raycaster.intersectObjects(objects);
+    // if ( intersects.length > 0 )
+    // {
+    //     var faceIndex = intersects[0].faceIndex;
+    //     var obj = intersects[0].object;
+    //     var geom = obj.geometry;
+    //     var faces = obj.geometry.faces;
+    //     var facesIndices = ["a","b","c"];
+    //     facesIndices.forEach(function(indices){
+    //         geom.vertices[faces[faceIndex][indices]].setZ(-10);
+    //     });
+    //     if(faceIndex%2 == 0){
+    //         faceIndex = faceIndex+1;
+    //     }
+    //     else{
+    //         faceIndex = faceIndex-1;
+    //     }
+    // }
+    
 
     if (intersects.length > 0) {
 
@@ -157,12 +186,28 @@ function MouseMove(e) {
         //     new THREE.MeshBasicMaterial({ transparent: true, opacity: 0.75, vertexColors: THREE.VertexColors, side: THREE.DoubleSide })
         // ]; // the two materials 
         for (var i = 0; i < geometry.faces.length; i++) {
+            // var j=0;
+            // if (i%2==0){
+            //     j = 2*i-(i-1);
+            // }
+            // else{
+            //     j = i-1; 
+            // }
           
             if (i == centroids[closeCentroids[0].index].index) {
-                geometry.faces[ i ].color.setHex( 0x097969)
+                // intersects[i].face.color.setHex(0x4f7942);
+                // intersects[ i ].object.material.color.set( 0x4f7942);
+                geometry.faces[ i ].color.setHex( 0x097969);
+                
             }
+            // if (i == centroids[closeCentroids[0].index].index && i%2==0) {
+                
+            //     geometry.faces[ i+1 ].color.setHex( 0x097969)
+            // }
             else{
-                geometry.faces[ i ].color.setHex( 0x00ff00 )
+                // intersects[i].face.color.setHex(0x00ff00);
+                // intersects[ i ].object.material.color.set(0x00ff00);
+                geometry.faces[ i ].color.setHex( 0x00ff00);;
             }
             geometry.colorsNeedUpdate = true
         // }
