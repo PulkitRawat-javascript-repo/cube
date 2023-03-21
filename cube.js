@@ -12,7 +12,7 @@ window.addEventListener('resize',function()
 var scene = new THREE.Scene();
 scene.background = new THREE.Color(0xecffdc);
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-scene.receiveShadow = true;
+// scene.receiveShadow = true;
 
 var renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -25,13 +25,13 @@ const plane = new THREE.Mesh(new THREE.PlaneGeometry(30,30,20),new THREE.MeshPho
 plane.receiveShadow = true;
 plane.rotation.x=-Math.PI/2
 scene.add(plane)
-plane.position.y = -2.7
+plane.position.y = -1.5
 
-var objects = [];
+// var objects = [];
 
-var geometry = new THREE.BoxGeometry(5, 5, 5);
+// var geometry = new THREE.BoxGeometry(5, 5, 5);
 
-var materials = new THREE.MeshPhongMaterial({color: 0x00ff00, vertexColors:true })
+// var materials = new THREE.MeshPhongMaterial({color: 0x00ff00, vertexColors:true })
 
 //   var materials = 
 //             [
@@ -43,16 +43,89 @@ var materials = new THREE.MeshPhongMaterial({color: 0x00ff00, vertexColors:true 
 //                 new THREE.MeshPhongMaterial({color:0x00FF00,side:THREE.DoubleSide,vertexColors:true})  //back
 //             ];
 
+var geometry = new THREE.BufferGeometry();
+const vertices = new Float32Array([
+    -1.0, -1.0, 1.0,
+    1.0, -1.0, 1.0,  
+    1.0, 1.0, 1.0, //front
+    -1.0, 1.0, 1.0,
+
+    -1.0, -1.0, -1.0,
+    1.0, -1.0, -1.0, // back
+    1.0, 1.0, -1.0,
+    -1.0, 1.0, -1.0,
+
+    -1.0, 1.0, -1.0,
+    -1.0, 1.0, 1.0,
+    1.0, 1.0, 1.0, //top
+    1.0, 1.0, -1.0,
+
+    -1.0, -1.0, -1.0,
+    -1.0, -1.0, 1.0,//bottom
+    1.0, -1.0, 1.0, 
+    1.0, -1.0, -1.0,
+
+   1.0, -1.0, -1.0,
+   1.0,  1.0, -1.0,
+   1.0,  1.0,  1.0,//right
+   1.0, -1.0,  1.0,
+
+  -1.0, -1.0, -1.0,
+  -1.0, -1.0,  1.0,
+  -1.0,  1.0,  1.0,//left
+  -1.0,  1.0, -1.0,
+])
+
+const connects = [
+    //front face
+    0, 1, 2,
+    0, 2, 3,
+    
+  
+    // Back face
+    4, 5, 6,
+    4, 6, 7,
+  
+    // Top face
+    8, 9, 10,
+    8, 10, 11,
+  
+    // Bottom face
+    12, 13, 14,
+    12, 14, 15,
+  
+    // Right face
+    16, 17, 18,
+    16, 18, 19,
+  
+    // Left face
+    20, 21, 22,
+    20, 22, 23,
+]
+
+// const uv = new Float32Array([
+//     0, 5,
+//     1, 0,
+//     1, 1,
+//     0, 1
+//   ])
+geometry.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) )
+// geometry.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
+
+geometry.setIndex(new THREE.Uint16BufferAttribute(connects,1));
+var materials = new THREE.MeshBasicMaterial({color:0x00ff00, side:THREE.DoubleSide});
 var cube = new THREE.Mesh(geometry, materials);
+
+
 
 cube.receiveShadow = true;
 cube.castShadow = true;
 
 scene.add(cube);
-objects[0] = cube;
-camera.position.z = 10;
+// objects[0] = cube;
+camera.position.z = 5;
 
-const directionalLight = new THREE.DirectionalLight(0x00ff00,1);
+const directionalLight = new THREE.DirectionalLight(0x00ff00,0.9);
 directionalLight.position.x += 20;
 directionalLight.position.y += 20;
 directionalLight.position.z += 20;
@@ -63,9 +136,9 @@ scene.add(directionalLight);
 
 // console.log(cube)
 const controls = new OrbitControls(camera, renderer.domElement);
-document.addEventListener('mousemove', MouseMove);
+// document.addEventListener('mousemove', MouseMove);
 
-let mouse = new THREE.Vector2();
+// let mouse = new THREE.Vector2();
 
 var animate = function () {
     requestAnimationFrame(animate);
@@ -207,7 +280,7 @@ function MouseMove(e) {
             else{
                 // intersects[i].face.color.setHex(0x00ff00);
                 // intersects[ i ].object.material.color.set(0x00ff00);
-                geometry.faces[ i ].color.setHex( 0x00ff00);;
+                geometry.faces[ i ].color.setHex( 0x00ff00);
             }
             geometry.colorsNeedUpdate = true
         // }
@@ -233,9 +306,9 @@ function MouseMove(e) {
     }
 
 
-    function n(a, b) {
-    return a.dist - b.dist;
-    }
+    // function n(a, b) {
+    // return a.dist - b.dist;
+    // }
 }
 document.body.appendChild(renderer.domElement);
 animate();
