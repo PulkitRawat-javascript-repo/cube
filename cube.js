@@ -1,8 +1,5 @@
 import * as THREE from 'three'
-// import { BufferGeometry } from 'three';
-
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-// import { STLloader } from 'three/addons/loaders/STLLoader.js';
 window.addEventListener('resize',function()
 {
     renderer.setSize(window.innerWidth,window.innerHeight);
@@ -22,13 +19,54 @@ renderer.shadowMap.enabled = true;
 
 scene.add(new THREE.AmbientLight(0xffffff,0.5))
 
-const plane = new THREE.Mesh(new THREE.PlaneGeometry(30,30,20),new THREE.MeshPhongMaterial({color:0xc1e1c1}))
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+let activePlane = null;
+let planes = [];
+
+const plane = new THREE.Mesh(new THREE.PlaneGeometry(30,30,20),new THREE.MeshPhongMaterial({color:0xc1e1c1,side:THREE.DoubleSide}))
 plane.receiveShadow = true;
 plane.rotation.x=-Math.PI/2
 scene.add(plane)
-plane.position.y = -1.5
+plane.position.y = -2.7;
 
 
+const plane1 = new THREE.Mesh(new THREE.PlaneGeometry(5,5,5),new THREE.MeshPhongMaterial({color:0x00ff00,side:THREE.DoubleSide}))
+// plane.castShadow = true;
+plane1.rotation.x=-Math.PI/2
+plane1.position.y = -2.5; 
+planes.push(plane1)
+scene.add(plane1)
+
+const plane2 = new THREE.Mesh(new THREE.PlaneGeometry(5,5,5),new THREE.MeshPhongMaterial({color:0x00ff00,side:THREE.DoubleSide}))
+// plane.castShadow = true;
+plane2.position.z = 2.5;
+planes.push(plane2)
+scene.add(plane2)
+
+const plane3 = new THREE.Mesh(new THREE.PlaneGeometry(5,5,5),new THREE.MeshPhongMaterial({color:0x00ff00,side:THREE.DoubleSide}))
+// plane.castShadow = true;
+plane3.position.z = -2.5;
+planes.push(plane3)
+scene.add(plane3)
+const plane4 = new THREE.Mesh(new THREE.PlaneGeometry(5,5,5),new THREE.MeshPhongMaterial({color:0x00ff00,side:THREE.DoubleSide}))
+// plane.castShadow = true;
+plane4.rotation.y=-Math.PI/2
+plane4.position.x = -2.5;
+planes.push(plane4)
+scene.add(plane4)
+const plane5 = new THREE.Mesh(new THREE.PlaneGeometry(5,5,5),new THREE.MeshPhongMaterial({color:0x00ff00,side:THREE.DoubleSide}))
+// plane.castShadow = true;
+plane5.rotation.y=Math.PI/2
+plane5.position.x = 2.5;
+planes.push(plane5)
+scene.add(plane5)
+const plane6 = new THREE.Mesh(new THREE.PlaneGeometry(5,5,5),new THREE.MeshPhongMaterial({color:0x00ff00,side:THREE.DoubleSide}))
+// plane.castShadow = true;
+plane6.rotation.x=-Math.PI/2
+plane6.position.y = 2.5;
+planes.push(plane6)
+scene.add(plane6)
 
 const directionalLight = new THREE.DirectionalLight(0x00ff00,0.9);
 directionalLight.position.x += 20;
